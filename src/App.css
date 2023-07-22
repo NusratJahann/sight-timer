@@ -1,5 +1,5 @@
-.btn-style {
-  @apply tracking-wider btn btn-neutral hover:bg-neutral-focus focus:btn-primary focus:text-base-100 text-base-content;
+.btn-text {
+  @apply tracking-wider btn btn-neutral hover:bg-neutral-focus text-base-content;
   font-weight: 500;
 
   height: 2.5rem;
@@ -7,4 +7,10 @@
   padding-right: 0.85rem;
   min-height: 2.5rem;
   font-size: 0.875rem;
+}
+.btn-icon {
+  @apply btn btn-neutral hover:bg-neutral-focus text-base-content;
+
+  height: 3rem;
+  min-height: 3rem;
 }

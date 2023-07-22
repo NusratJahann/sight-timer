@@ -13,8 +13,8 @@ module.exports = {
       {
         dark: {
           ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
-          neutral: "#212121",
-          "neutral-focus": "#2f2f2f",
+          neutral: "#161616",
+          "neutral-focus": "#222222",
           primary: "#f2f2f2",
           "base-100": "#0a0a0a",
           "base-content": "#f2f2f2",
@@ -24,7 +24,6 @@ module.exports = {
           "--animation-input": "0.2s",
           "--btn-text-case": "lowercase",
           "--btn-focus-scale": "0.95",
-          "--border-btn": ".3rem",
         },
       },
     ],
