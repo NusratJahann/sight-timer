@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
 const Timer = () => {
 
-  // get time
-  const [time, setTime] = useState({
+  // states
+
+  // input time
+  const [inputTime, setInputTime] = useState({
     minutes: 0,
     seconds: 21
   })
+
+  // get time
+  const [time, setTime] = useState({
+    minutes: inputTime.minutes,
+    seconds: inputTime.seconds
+  })
+
+  // 
 
 
   // tells whenever the timer is on or off
@@ -51,6 +61,27 @@ const Timer = () => {
     return () => clearInterval(timer);
   }, [time, isRunning])
   
+  // Pause and Resume
+  const pauseAndResume = () => {
+    if (isRunning) {
+      setIsRunning(false); //* toggle to false if true
+    } else {
+      setIsRunning(true); //* toggle to true if false
+    }
+  };
+
+    // Restart
+    const restart = () => {
+
+      //* go back to initial state
+      setTime({
+        minutes: inputTime.minutes,
+        seconds: inputTime.seconds,
+      });
+  
+      //* and stop the timer
+      setIsRunning(false);
+    };
 
   return (
     <>
@@ -65,16 +96,22 @@ const Timer = () => {
         <div className="join">
 
           {/* restart btn */}
-          <button className="btn-icon join-item border-base-100">
+          <button className="btn-icon join-item border-base-100" onClick={restart}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
             </svg>
           </button>
 
           {/* start / pause btn */}
-          <button className="btn-icon join-item border-base-100">
+          <button className={isRunning ? "btn-icon join-item border-base-100" : "btn-icon join-item btn-primary text-base-100"} onClick={pauseAndResume}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/>
+              <path strokeLinecap="round" strokeLinejoin="round" 
+                d={
+                  isRunning
+                    ? "M15.75 5.25v13.5m-7.5-13.5v13.5"  // resume 
+                    : "M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" // pause
+                }
+              />
             </svg>
           </button>
 
