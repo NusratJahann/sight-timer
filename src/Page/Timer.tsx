@@ -6,8 +6,26 @@ const Timer = () => {
   // input time
   const [inputTime, setInputTime] = useState({
     minutes: 20,
-    seconds: 0
+    seconds: 0,
+    alarmDuration: 7
   })
+
+  // handle input change aka get and set values
+  const handleInputChange = (event: any) => {
+
+    // get values from event 🔪
+    const { name, value } = event.target;
+
+    // // Convert the input value to an integer, or set it to 0 if it's not a valid number or empty
+    // const parsedValue = value === isNaN ? 0 : parseInt(value);
+
+    // set values to setChangedTime 🔮
+    setInputTime({
+      ...inputTime,
+      [name]: parseInt(value),
+    });
+  
+  };
 
   // get time
   const [time, setTime] = useState({
@@ -139,13 +157,13 @@ const Timer = () => {
 
               {/* Set time */}
               <div>
-                <label htmlFor="minutes" className="block mb-2" id="minutes">Set time</label>
+                <label className="block mb-2">Set time</label>
                 <div className="join w-full">
                 {/* Minutes */}
-                <input type="number" className="join-item input border-neutral-focus w-1/2" placeholder="Minutes"/>
+                <input type="number" className="join-item input border-neutral-focus w-1/2" name="minutes" min={0} onChange={handleInputChange} value={inputTime.minutes} placeholder="Minutes"/>
 
                 {/* Seconds */}
-                <input type="number" className="join-item input border-neutral-focus w-1/2" placeholder="Seconds"/>
+                <input type="number" className="join-item input border-neutral-focus w-1/2" name="seconds" min={0} onChange={handleInputChange} value={inputTime.seconds} placeholder="Seconds"/>
                 </div>
               </div>
 
@@ -154,7 +172,7 @@ const Timer = () => {
               <div>
                 <label htmlFor="minutes" className="block mb-2" id="minutes">Alarm duration</label>
                 <div className="join w-full">
-                <input type="number" className="join-item input border-neutral-focus w-full" placeholder="Alarm duration"/>
+                <input type="number" className="join-item input border-neutral-focus w-full" name="alarmDuration" onChange={handleInputChange} value={inputTime.alarmDuration} placeholder="Alarm duration"/>
                 </div>
               </div>
 
