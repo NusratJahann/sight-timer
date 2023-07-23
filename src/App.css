@@ -1,5 +1,5 @@
 .btn-text {
-  @apply tracking-wider btn btn-neutral hover:bg-neutral-focus text-base-content;
+  @apply tracking-widest btn btn-neutral hover:bg-neutral-focus text-base-content capitalize;
   font-weight: 500;
 
   height: 2.5rem;

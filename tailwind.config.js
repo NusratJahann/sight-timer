@@ -16,6 +16,7 @@ module.exports = {
           neutral: "#161616",
           "neutral-focus": "#222222",
           primary: "#f2f2f2",
+          secondary: "#bfbfbf",
           "base-100": "#0a0a0a",
           "base-content": "#f2f2f2",
           "--rounded-btn": ".5rem",
