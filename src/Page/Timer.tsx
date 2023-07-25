@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 const Timer = () => {
 
   // states
-
   // input time
   const [inputTime, setInputTime] = useState({
     minutes: 20,
@@ -10,21 +9,21 @@ const Timer = () => {
     alarmDuration: 7
   })
 
+  //!/ */ */ */ */ */ */ */ */ */ */ */ */ */ input center
+
   // handle input change aka get and set values
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
     // get values from event 🔪
     const { name, value } = event.target;
 
-    // // Convert the input value to an integer, or set it to 0 if it's not a valid number or empty
-    // const parsedValue = value === isNaN ? 0 : parseInt(value);
 
-    // set values to setChangedTime 🔮
+    //set values to setInputTime 🔮
     setInputTime({
       ...inputTime,
       [name]: parseInt(value),
     });
-  
+
   };
 
   // get time
@@ -33,14 +32,13 @@ const Timer = () => {
     seconds: inputTime.seconds
   })
 
-  // 
 
-
+  //!/ */ */ */ */ */ */ */ */ */ */ */ */ */ timer center
   // tells whenever the timer is on or off
   const [isRunning, setIsRunning] = useState(true);
 
   useEffect(() => {
-    let timer: any; // potential timer
+    let timer: NodeJS.Timeout | undefined; // potential timer
 
     // if isRunning is true then let the timer start
     if(isRunning){
@@ -79,6 +77,7 @@ const Timer = () => {
     return () => clearInterval(timer);
   }, [time, isRunning])
   
+
   // Pause and Resume
   const pauseAndResume = () => {
     if (isRunning) {
@@ -89,17 +88,37 @@ const Timer = () => {
   };
 
     // Restart
-    const restart = () => {
+  const restart = () => {
 
-      //* go back to initial state
-      setTime({
-        minutes: inputTime.minutes,
-        seconds: inputTime.seconds,
-      });
-  
-      //* and stop the timer
-      setIsRunning(false);
-    };
+    //* go back to initial state
+    setTime({
+      minutes: inputTime.minutes,
+      seconds: inputTime.seconds,
+    });
+
+    // and stop the timer
+    setIsRunning(false);
+  };
+
+
+  //!/ */ */ */ */ */ */ */ */ */ */ */ */ */ input center again
+  // Reset settings
+    const resetSettings = () => {
+     setInputTime({
+        minutes: 20, // mAgiC 
+        seconds: 0,
+        alarmDuration: 7
+      })
+  }
+    
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setTime({
+      minutes: inputTime.minutes,
+      seconds: inputTime.seconds
+    })
+    window.settingsModal.close()
+  };
 
   return (
     <>
@@ -145,25 +164,25 @@ const Timer = () => {
 
         {/* settings modal */}
         <dialog id="settingsModal" className="modal backdrop-brightness-50 backdrop-blur-sm">
-          <form method="dialog" className="modal-box bg-base-100 p-9">
-            <button className="btn btn-xs btn-circle btn-ghost hover:btn-neutral absolute right-2 top-2">
+          <form method="dialog" className="modal-box bg-base-100 p-9" onSubmit={handleSubmit}>
+            <div className="btn btn-xs btn-circle btn-ghost hover:btn-neutral absolute right-2 top-2" onClick={() => window.settingsModal.close()}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
-            </button>
+            </div>
             <h3 className="font-normal tracking-wide text-xl">Settings</h3>
             <h3 className="mb-8 font-normal text-secondary tracking-wide">Change your timer experience as you like.</h3>
-            <form className="grid gap-7">
+            <div className="grid gap-7">
 
               {/* Set time */}
               <div>
                 <label className="block mb-2">Set time</label>
                 <div className="join w-full">
                 {/* Minutes */}
-                <input type="number" className="join-item input border-neutral-focus w-1/2" name="minutes" min={0} onChange={handleInputChange} value={inputTime.minutes} placeholder="Minutes"/>
+                <input type="number" className="join-item input border-neutral-focus w-1/2" name="minutes" onChange={handleInputChange} value={inputTime.minutes} placeholder="Minutes"/>
 
                 {/* Seconds */}
-                <input type="number" className="join-item input border-neutral-focus w-1/2" name="seconds" min={0} onChange={handleInputChange} value={inputTime.seconds} placeholder="Seconds"/>
+                <input type="number" className="join-item input border-neutral-focus w-1/2" name="seconds" onChange={handleInputChange} value={inputTime.seconds} placeholder="Seconds"/>
                 </div>
               </div>
 
@@ -178,10 +197,10 @@ const Timer = () => {
 
               {/* buttons- reset, save */}
               <div className="grid grid-cols-2 gap-7">
-                <button className="btn-text">Save</button>
-                <button className="btn-text">Reset</button>
+                <button className="tracking-widest btn btn-neutral hover:bg-neutral-focus text-base-content capitalize h-[2.5rem] px-[0.85rem] min-h-[2.5rem] text-[0.875rem]" type="submit">Save</button>
+                <div className="tracking-widest btn btn-neutral hover:bg-neutral-focus text-base-content capitalize h-[2.5rem] px-[0.85rem] min-h-[2.5rem] text-[0.875rem]" onClick={resetSettings}>Reset</div>
               </div>
-            </form>
+            </div>
           </form>
       </dialog>
       </div>
