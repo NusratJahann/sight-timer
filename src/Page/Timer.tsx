@@ -43,8 +43,19 @@ const Timer = () => {
     // if isRunning is true then let the timer start
     if(isRunning){
 
+      // when second is greater than 60 automatically convert it to minutes
+      if(time.seconds > 60){
+        setTime({
+          // when second is more than 60, and 60 seconds = 1 minute. divide the second then add it as a minute with the actual minutes' value
+          minutes: time.minutes + Math.floor(time.seconds / 60),
+      
+          // set the additional seconds from above division as the second
+          seconds: time.seconds % 60
+        })
+      }
+      
       timer = setInterval(() => {
-
+        
         // if the timer fully hits 0 then that mean the timer is end and it has to show some sort of alarm
         if (time.minutes === 0 && time.seconds === 0) { 
           clearInterval(timer);
