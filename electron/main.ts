@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain, Notification } from 'electron'
 import path from 'node:path'
 
 // The built directory structure
@@ -23,9 +23,18 @@ function createWindow() {
     autoHideMenuBar: true,
     icon: path.join(process.env.PUBLIC, 'electron-vite.svg'),
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
       preload: path.join(__dirname, 'preload.js'),
     },
   })
+
+  // Listen for notification events from the renderer process
+  ipcMain.on('show-notification', (event, notificationData) => {
+    const { toastXml, sound } = notificationData;
+    const notification = new Notification({ toastXml, sound });
+    notification.show();
+  });
 
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {

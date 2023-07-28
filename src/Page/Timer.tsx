@@ -32,6 +32,31 @@ const Timer = () => {
     seconds: inputTime.seconds
   })
 
+  //! Notification center
+  const showNotification = () => {
+    const notificationData = {
+      toastXml: 
+      `<toast>
+        <visual>
+          <binding template="ToastText02">
+            <text id="1">Get Up </text>
+            <text id="2">Take a break for 20 seconds</text>
+            <text id="2">Press the restart button to restart the timer after 20 seconds</text>
+          </binding>
+        </visual>
+        <actions>
+          <action
+            activationType="protocol"
+            arguments="myapp://test"
+            content="Restart Timer"
+          />
+        </actions>
+      </toast>`
+    };
+
+    // Send a notification event to the main process
+    window.require('electron').ipcRenderer.send('show-notification', notificationData);
+  };
 
   //!/ */ */ */ */ */ */ */ */ */ */ */ */ */ timer center
   // tells whenever the timer is on or off
@@ -60,6 +85,7 @@ const Timer = () => {
         if (time.minutes === 0 && time.seconds === 0) { 
           clearInterval(timer);
           //! future alarm here
+          showNotification()
         } 
 
         // when second is 0
